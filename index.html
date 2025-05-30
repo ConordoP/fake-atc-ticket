@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Biglietto SMS già convalidato</title>
+  <link rel="stylesheet" href="index.d2255cbd.css" />
+  <style>
+    body { display: none; }
+
+    /* Verifica button styling */
+    #verify {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem auto;
+      padding: 0 3rem;
+      height: 6rem;
+      font-size: 3rem;
+      font-weight: 400;
+      color: white;
+      background-color: #ff6600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      max-width: 220px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      font-family: Arial Black, Arial, sans-serif;
+    }
+    #verify:hover {
+      background-color: #e65c00;
+    }
+
+    /* Grow-in animation */
+    @keyframes growIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .grow-animate {
+      animation: growIn 2.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="ticket">
+    <div class="col-12 my-head"></div>
+    <div class="col-12 convalida">Biglietto SMS già convalidato</div>
+
+    <div class="col-12 logo padded">
+      <img alt="logo" class="half-width" src="atc_logo.b59f9f42.gif" />
+    </div>
+
+    <div id="ver-ok" class="col-12 logo padded text-center" style="display: flex; flex-direction: column; align-items: center">
+      <!-- Two images: default (ok) and spinner -->
+      <img
+        id="ok-img"
+        alt="ok"
+        class="ok padded"
+        src="ok.bc1fbd98.png"
+        style="max-width: 100%; height: auto"
+      />
+      <img
+        id="check-img"
+        alt="check"
+        class="ok padded"
+        src="Spinneratc.gif"
+        style="max-width: 100%; height: auto; display: none"
+      />
+
+      <div style="color: #1d4f99; font-family: Arial, sans-serif; font-weight: 700; font-size: 2.5rem; margin-top: 1rem;">
+        VALE 60 MINUTI
+      </div>
+      <div style="color: #1d4f99; font-family: Arial, sans-serif; font-weight: 700; font-size: 2.5rem; margin-top: 1rem;">
+        € 3.00
+      </div>
+      <div id="valid-from-text" style="color: #1d4f99; font-family: 'Arial', sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1rem;">
+        Valido a partire dalle "" del ""
+      </div>
+
+      <button id="verify" type="button">Verifica</button>
+    </div>
+  </div>
+
+  <div class="col-10 offset-1 upsell">
+    <div style="color: #ffffff; font-family: Arial Black, Arial, sans-serif; font-weight: 600; font-size: 2rem; margin-top: 1rem;">
+      Invia ATCU al 4850207 per un biglietto urbano (1,50 €).
+    </div>
+    <div style="color: #ffffff; font-family: Arial Black, Arial, sans-serif; font-weight: 600; font-size: 2rem; margin-top: 1rem;">
+      Invia ATCE3 al 4850207 per un biglietto extraurbano (3,00 €).
+    </div>
+  </div>
+
+  <script>
+    // Prompt per l'orario di validità
+    let userTime = prompt("Inserisci l'orario di validità (formato HH:mm, esempio: 21:45):");
+
+    if (!userTime || !/^\d{2}:\d{2}$/.test(userTime.trim())) {
+      userTime = "??:??";
+    }
+
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, "0");
+    const month = (now.getMonth() + 1).toString().padStart(2, "0");
+    const year = now.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+
+    document.getElementById("valid-from-text").textContent =
+      `Valido a partire dalle ${userTime} del ${formattedDate}`;
+
+    document.body.style.display = "block";
+
+    // Swapping images on button click
+    const verifyBtn = document.getElementById("verify");
+    const okImg = document.getElementById("ok-img");
+    const checkImg = document.getElementById("check-img");
+
+    verifyBtn.addEventListener("click", () => {
+      okImg.classList.remove("grow-animate");
+      checkImg.classList.remove("grow-animate");
+
+      okImg.style.display = "none";
+      checkImg.style.display = "block";
+      void checkImg.offsetWidth;
+      checkImg.classList.add("grow-animate");
+
+      setTimeout(() => {
+        checkImg.style.display = "none";
+        okImg.style.display = "block";
+        void okImg.offsetWidth;
+        okImg.classList.add("grow-animate");
+      }, 3600);
+    });
+  </script>
+</body>
+</html>
