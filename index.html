@@ -2,12 +2,12 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <title>Biglietto SMS già convalidato</title>
+  <title>Biglietto SMS già convalidato</title> <!-- This is the text displayed on top of the page-->
   <link rel="stylesheet" href="index.d2255cbd.css" />
   <style>
     body { display: none; }
 
-    /* Verifica button styling */
+    /* This is used for the Verifica button */
     #verify {
       display: flex;
       justify-content: center;
@@ -57,7 +57,7 @@
     </div>
 
     <div id="ver-ok" class="col-12 logo padded text-center" style="display: flex; flex-direction: column; align-items: center">
-      <!-- Two images: default (ok) and spinner -->
+      <!-- This loads the two images -->
       <img
         id="ok-img"
         alt="ok"
@@ -74,10 +74,10 @@
       />
 
       <div style="color: #1d4f99; font-family: Arial, sans-serif; font-weight: 700; font-size: 2.5rem; margin-top: 1rem;">
-        VALE 60 MINUTI
+        VALE 60 MINUTI     <!-- This MUST be 60 minutes, all digital tickets are valid for just 60 min-->
       </div>
       <div style="color: #1d4f99; font-family: Arial, sans-serif; font-weight: 700; font-size: 2.5rem; margin-top: 1rem;">
-        € 3.00
+        € 3.00 <!-- This is the price of the ticket 3 euros is for trips of 10-15km -->
       </div>
       <div id="valid-from-text" style="color: #1d4f99; font-family: 'Arial', sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1rem;">
         Valido a partire dalle "" del ""
@@ -89,7 +89,7 @@
 
   <div class="col-10 offset-1 upsell">
     <div style="color: #ffffff; font-family: Arial Black, Arial, sans-serif; font-weight: 600; font-size: 2rem; margin-top: 1rem;">
-      Invia ATCU al 4850207 per un biglietto urbano (1,50 €).
+      Invia ATCU al 4850207 per un biglietto urbano (1,50 €). <!-- This text is here just to make the page more realistic-->
     </div>
     <div style="color: #ffffff; font-family: Arial Black, Arial, sans-serif; font-weight: 600; font-size: 2rem; margin-top: 1rem;">
       Invia ATCE3 al 4850207 per un biglietto extraurbano (3,00 €).
@@ -97,13 +97,13 @@
   </div>
 
   <script>
-    // Prompt per l'orario di validità
+    // Prompt for the userTime (insert current time)
     let userTime = prompt("Inserisci l'orario di validità (formato HH:mm, esempio: 21:45):");
 
     if (!userTime || !/^\d{2}:\d{2}$/.test(userTime.trim())) {
       userTime = "??:??";
     }
-
+    // I couldn't automate this for some unknown reason 
     const now = new Date();
     const day = now.getDate().toString().padStart(2, "0");
     const month = (now.getMonth() + 1).toString().padStart(2, "0");
