@@ -239,12 +239,8 @@
       msg.appendChild(time);
 
       msg.addEventListener('dblclick', () => {
-        if (msg.getAttribute('contenteditable') === 'true') {
-          msg.setAttribute('contenteditable', 'false');
-        } else {
-          msg.setAttribute('contenteditable', 'true');
-          msg.focus();
-        }
+        msg.setAttribute('contenteditable', msg.getAttribute('contenteditable') === 'true' ? 'false' : 'true');
+        msg.focus();
       });
 
       chatBox.appendChild(msg);
@@ -285,10 +281,22 @@
         showTypingIndicator();
         setTimeout(() => {
           removeTypingIndicator();
-          createMessage(
-            "Biglietto 3,00 Eur cod.01-05\nEmesso alle 16:05 del 2/05/2025.\nValido per 60 min. Visualizza il biglietto cliccando qui: https://atc.ticketingpass.it/?ticketId=03e8329d-d51d-4910-85f0-4b70997fe767.\nCV: (61)58Y21970704D3652-9 ATC ESERCIZIO SpA PI 0122_2260_117.\nInfo su voda.it/mobileticketing",
-            'received'
-          );
+
+          // ⏰ Subtract 15 minutes from current time
+          const now = new Date();
+          now.setMinutes(now.getMinutes() - 15);
+
+          const hours = now.getHours().toString().padStart(2, '0');
+          const minutes = now.getMinutes().toString().padStart(2, '0');
+          const day = now.getDate().toString().padStart(2, '0');
+          const month = (now.getMonth() + 1).toString().padStart(2, '0');
+          const year = now.getFullYear();
+
+          const ticketTime = `Emesso alle ${hours}:${minutes} del ${day}/${month}/${year}.`;
+
+          const message = `Biglietto 3,00 Eur cod.01-05\n${ticketTime}\nValido per 60 min. Visualizza il biglietto cliccando qui: https://atc.ticketingpass.it/?ticketId=03e8329d-d51d-4910-85f0-4b70997fe767.\nCV: (61)58Y21970704D3652-9 ATC ESERCIZIO SpA PI 0122_2260_117.\nInfo su voda.it/mobileticketing`;
+
+          createMessage(message, 'received');
         }, 1500);
       }
 
@@ -300,16 +308,10 @@
     });
 
     function toggleDarkMode() {
-      if (body.classList.contains('dark')) {
-        body.classList.remove('dark');
-        body.classList.add('light');
-      } else {
-        body.classList.remove('light');
-        body.classList.add('dark');
-      }
+      body.classList.toggle('dark');
+      body.classList.toggle('light');
     }
 
-    // Redirect ticketingpass.it links
     document.addEventListener('click', function (e) {
       const target = e.target;
       if (target.tagName === 'A' && target.href.includes('atc.ticketingpass.it')) {
